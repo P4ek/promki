@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Promki – bonusy bankowe, krypto i inne promocje</title>
+  <meta name="description" content="Aktualne promocje: bonusy bankowe, krypto i inne akcje z instrukcją krok po kroku.">
+
+  <style>
+    /* ===== KOLORY I PODSTAWY ===== */
+    /* Wszystkie kolory w jednym miejscu – zmień tutaj, a zmienią się na całej stronie */
+    :root {
+      --tlo: #0f1115;          /* tło strony */
+      --karta: #181b22;        /* tło karty */
+      --ramka: #2a2f3a;        /* kolor obramowań */
+      --tekst: #e8eaf0;        /* główny tekst */
+      --tekst-slaby: #9aa1b1;  /* mniej ważny tekst */
+      --akcent: #4ade80;       /* zielony – nagroda, przycisk */
+      --akcent-ciemny: #0f2a1a;
+      --ostrzezenie: #fbbf24;  /* żółty – ostrzeżenie krypto */
+      --ostrzezenie-tlo: #2b2210;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--tlo);
+      color: var(--tekst);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* Środkowy kontener – na telefonie pełna szerokość, na komputerze max 720px */
+    .kontener {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    a {
+      color: var(--akcent);
+    }
+
+    /* ===== NAGŁÓWEK ===== */
+    header {
+      padding: 32px 0 16px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.8rem;
+    }
+
+    .opis {
+      margin: 0;
+      color: var(--tekst-slaby);
+    }
+
+    /* Informacja o linkach polecających */
+    .info-polecajace {
+      margin: 16px 0 0;
+      padding: 12px 14px;
+      border: 1px solid var(--ramka);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--tekst-slaby);
+    }
+
+    /* ===== FILTRY ===== */
+    .filtry {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0;
+    }
+
+    .filtr {
+      padding: 8px 16px;
+      border: 1px solid var(--ramka);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--tekst);
+      font: inherit;
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    /* Aktywny filtr (ten kliknięty) */
+    .filtr.aktywny {
+      background: var(--akcent);
+      border-color: var(--akcent);
+      color: #000;
+      font-weight: 600;
+    }
+
+    /* ===== KARTY PROMOCJI ===== */
+    .lista {
+      display: grid;
+      gap: 16px;
+      padding-bottom: 24px;
+    }
+
+    .karta {
+      padding: 18px;
+      background: var(--karta);
+      border: 1px solid var(--ramka);
+      border-radius: 14px;
+    }
+
+    .karta h2 {
+      margin: 0 0 8px;
+      font-size: 1.2rem;
+    }
+
+    /* Małe etykiety: kategoria, data końca */
+    .etykiety {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .etykieta {
+      padding: 2px 10px;
+      border: 1px solid var(--ramka);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--tekst-slaby);
+    }
+
+    /* Wyróżniona nagroda */
+    .nagroda {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      background: var(--akcent-ciemny);
+      border-radius: 8px;
+      color: var(--akcent);
+      font-size: 1.3rem;
+      font-weight: 700;
+    }
+
+    .warunki {
+      margin: 0 0 12px;
+    }
+
+    /* Ostrzeżenie dla krypto */
+    .ostrzezenie {
+      margin: 0 0 12px;
+      padding: 10px 12px;
+      background: var(--ostrzezenie-tlo);
+      border-left: 4px solid var(--ostrzezenie);
+      border-radius: 6px;
+      color: var(--ostrzezenie);
+      font-size: 0.9rem;
+    }
+
+    /* Rozwijana lista kroków (<details> działa bez JavaScriptu) */
+    details {
+      margin-bottom: 14px;
+      border: 1px solid var(--ramka);
+      border-radius: 8px;
+    }
+
+    summary {
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    details ol {
+      margin: 0;
+      padding: 0 16px 12px 36px;
+    }
+
+    details li {
+      margin-bottom: 4px;
+    }
+
+    /* Przycisk i link do regulaminu */
+    .akcje {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .przycisk {
+      display: inline-block;
+      padding: 10px 18px;
+      background: var(--akcent);
+      border-radius: 8px;
+      color: #000;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .przycisk:hover {
+      filter: brightness(1.1);
+    }
+
+    .dopisek {
+      font-size: 0.8rem;
+      color: var(--tekst-slaby);
+    }
+
+    .regulamin {
+      font-size: 0.9rem;
+    }
+
+    /* Zakończona promocja – wyszarzona */
+    .karta.zakonczona {
+      opacity: 0.45;
+      filter: grayscale(1);
+    }
+
+    .napis-zakonczona {
+      display: inline-block;
+      margin-bottom: 8px;
+      padding: 2px 10px;
+      background: var(--ramka);
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .pusto {
+      color: var(--tekst-slaby);
+      text-align: center;
+    }
+
+    /* ===== STOPKA ===== */
+    footer {
+      padding: 24px 0 40px;
+      border-top: 1px solid var(--ramka);
+      color: var(--tekst-slaby);
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="kontener">
+
+    <!-- ===== NAGŁÓWEK ===== -->
+    <header>
+      <h1>Promki</h1>
+      <p class="opis">Bonusy bankowe, krypto i inne promocje – z instrukcją krok po kroku.</p>
+      <p class="info-polecajace">
+        Część linków to moje linki polecające. Jeśli z nich skorzystasz, mogę dostać nagrodę.
+        Ciebie to nic nie kosztuje.
+      </p>
+    </header>
+
+    <!-- ===== FILTRY ===== -->
+    <!-- data-kategoria musi pasować do pola "kategoria" w promocjach -->
+    <nav class="filtry">
+      <button class="filtr aktywny" data-kategoria="wszystkie">Wszystkie</button>
+      <button class="filtr" data-kategoria="bank">Bank</button>
+      <button class="filtr" data-kategoria="krypto">Krypto</button>
+      <button class="filtr" data-kategoria="inne">Inne</button>
+    </nav>
+
+    <!-- ===== LISTA PROMOCJI ===== -->
+    <!-- Ten element jest pusty – JavaScript wstawia tu karty -->
+    <main id="lista" class="lista"></main>
+
+    <!-- ===== STOPKA ===== -->
+    <footer>
+      Zawsze przeczytaj regulamin u organizatora. Strona nie jest doradztwem finansowym.
+    </footer>
+
+  </div>
+
+  <script>
+    // =====================================================================
+    // PROMOCJE
+    // =====================================================================
+    // Jak dodać nową promocję:
+    // 1. Skopiuj cały blok { ... } jednej promocji (razem z przecinkiem po "}").
+    // 2. Wklej go w tablicy poniżej (kolejność na stronie = kolejność tutaj).
+    // 3. Zmień wartości. Pamiętaj:
+    //    - id: unikalny, bez spacji i polskich znaków, np. "revolut-bonus"
+    //    - kategoria: tylko "bank", "krypto" albo "inne"
+    //    - kroki: lista tekstów w [ ], każdy w cudzysłowie, oddzielone przecinkami
+    //    - koniec: data w formacie "RRRR-MM-DD" (np. "2026-12-31") albo null (bez cudzysłowu!)
+    //    - polecajacy: true albo false (bez cudzysłowu!)
+    // 4. Zapisz plik i odśwież stronę w przeglądarce.
+    // =====================================================================
+    const PROMOCJE = [
+      {
+        id: "pumpfun-bonus",
+        nazwa: "pump.fun, bonus do wpłaty",
+        kategoria: "krypto",
+        nagroda: "30 $ w USDC",
+        warunki: "Wpłać 30 $, po 24 godzinach dostajesz kolejne 30 $ w USDC.",
+        kroki: [
+          "Pobierz aplikację pump.fun.",
+          "Załóż konto przez mój link.",
+          "Wpłać 30 $.",
+          "Poczekaj 24 godziny.",
+          "Odbierz 30 $ w USDC."
+        ],
+        link: "https://pump.fun/u/peczterek",
+        regulamin: "https://pump.fun/docs/app-moonpay-matching",
+        koniec: null,
+        polecajacy: true
+      },
+
+      // Tu wklej kolejną promocję
+    ];
+
+    // =====================================================================
+    // USTAWIENIA
+    // =====================================================================
+
+    // Ładne nazwy kategorii do wyświetlenia na kartach
+    const NAZWY_KATEGORII = {
+      bank: "Bank",
+      krypto: "Krypto",
+      inne: "Inne"
+    };
+
+    const OSTRZEZENIE_KRYPTO =
+      "Kryptowaluty to bardzo wysokie ryzyko, możesz stracić wpłacone pieniądze. " +
+      "To nie jest porada inwestycyjna.";
+
+    // Aktualnie wybrany filtr
+    let wybranaKategoria = "wszystkie";
+
+    // =====================================================================
+    // FUNKCJE POMOCNICZE
+    // =====================================================================
+
+    // Zwraca dzisiejszą datę jako tekst "RRRR-MM-DD" (według czasu użytkownika)
+    function dzisiaj() {
+      const d = new Date();
+      const rok = d.getFullYear();
+      const miesiac = String(d.getMonth() + 1).padStart(2, "0");
+      const dzien = String(d.getDate()).padStart(2, "0");
+      return rok + "-" + miesiac + "-" + dzien;
+    }
+
+    // Czy promocja już się skończyła?
+    // Promocja trwa jeszcze w dniu końca, kończy się dzień później.
+    // Daty w formacie "RRRR-MM-DD" można porównywać jak zwykły tekst.
+    function czyZakonczona(promocja) {
+      if (promocja.koniec === null) {
+        return false; // bezterminowa
+      }
+      return promocja.koniec < dzisiaj();
+    }
+
+    // Zamienia "2026-12-31" na "31.12.2026"
+    function formatujDate(data) {
+      const [rok, miesiac, dzien] = data.split("-");
+      return dzien + "." + miesiac + "." + rok;
+    }
+
+    // Tworzy element HTML z klasą i tekstem.
+    // Używamy textContent zamiast innerHTML – to bezpieczniejsze.
+    function stworz(tag, klasa, tekst) {
+      const el = document.createElement(tag);
+      if (klasa) el.className = klasa;
+      if (tekst) el.textContent = tekst;
+      return el;
+    }
+
+    // =====================================================================
+    // TWORZENIE KARTY JEDNEJ PROMOCJI
+    // =====================================================================
+    function stworzKarte(promocja) {
+      const zakonczona = czyZakonczona(promocja);
+
+      const karta = stworz("article", "karta");
+      karta.id = promocja.id; // dzięki temu można linkować np. index.html#pumpfun-bonus
+      if (zakonczona) {
+        karta.classList.add("zakonczona");
+        karta.appendChild(stworz("span", "napis-zakonczona", "Zakończona"));
+      }
+
+      // Nazwa
+      karta.appendChild(stworz("h2", "", promocja.nazwa));
+
+      // Etykiety: kategoria + data końca
+      const etykiety = stworz("div", "etykiety");
+      etykiety.appendChild(stworz("span", "etykieta", NAZWY_KATEGORII[promocja.kategoria]));
+      const tekstDaty = promocja.koniec
+        ? "Do " + formatujDate(promocja.koniec)
+        : "Bezterminowa";
+      etykiety.appendChild(stworz("span", "etykieta", tekstDaty));
+      karta.appendChild(etykiety);
+
+      // Nagroda (wyróżniona)
+      karta.appendChild(stworz("div", "nagroda", promocja.nagroda));
+
+      // Warunki
+      karta.appendChild(stworz("p", "warunki", promocja.warunki));
+
+      // Ostrzeżenie tylko dla krypto
+      if (promocja.kategoria === "krypto") {
+        karta.appendChild(stworz("p", "ostrzezenie", "⚠️ " + OSTRZEZENIE_KRYPTO));
+      }
+
+      // Rozwijana lista kroków
+      const szczegoly = stworz("details");
+      szczegoly.appendChild(stworz("summary", "", "Instrukcja krok po kroku"));
+      const listaKrokow = stworz("ol");
+      promocja.kroki.forEach(function (krok) {
+        listaKrokow.appendChild(stworz("li", "", krok));
+      });
+      szczegoly.appendChild(listaKrokow);
+      karta.appendChild(szczegoly);
+
+      // Przycisk + regulamin
+      const akcje = stworz("div", "akcje");
+
+      const przycisk = stworz("a", "przycisk", "Przejdź do promocji");
+      przycisk.href = promocja.link;
+      przycisk.target = "_blank"; // nowa karta
+      // Dla linków polecających dodajemy "sponsored" (informacja dla Google)
+      przycisk.rel = promocja.polecajacy ? "noopener sponsored" : "noopener";
+      akcje.appendChild(przycisk);
+
+      if (promocja.polecajacy) {
+        akcje.appendChild(stworz("span", "dopisek", "link polecający"));
+      }
+
+      const regulamin = stworz("a", "regulamin", "Oficjalny regulamin");
+      regulamin.href = promocja.regulamin;
+      regulamin.target = "_blank";
+      regulamin.rel = "noopener";
+      akcje.appendChild(regulamin);
+
+      karta.appendChild(akcje);
+      return karta;
+    }
+
+    // =====================================================================
+    // WYŚWIETLANIE LISTY
+    // =====================================================================
+    function pokazPromocje() {
+      const lista = document.getElementById("lista");
+      lista.innerHTML = ""; // czyścimy stare karty
+
+      // 1. Zostawiamy tylko promocje z wybranej kategorii
+      const widoczne = PROMOCJE.filter(function (p) {
+        return wybranaKategoria === "wszystkie" || p.kategoria === wybranaKategoria;
+      });
+
+      // 2. Dzielimy na aktywne i zakończone – zakończone idą na dół
+      const aktywne = widoczne.filter(function (p) { return !czyZakonczona(p); });
+      const zakonczone = widoczne.filter(function (p) { return czyZakonczona(p); });
+      const posortowane = aktywne.concat(zakonczone);
+
+      // 3. Gdy nic nie ma – pokazujemy komunikat
+      if (posortowane.length === 0) {
+        lista.appendChild(stworz("p", "pusto", "Brak promocji w tej kategorii."));
+        return;
+      }
+
+      // 4. Tworzymy kartę dla każdej promocji
+      posortowane.forEach(function (p) {
+        lista.appendChild(stworzKarte(p));
+      });
+    }
+
+    // =====================================================================
+    // OBSŁUGA PRZYCISKÓW FILTROWANIA
+    // =====================================================================
+    document.querySelectorAll(".filtr").forEach(function (przycisk) {
+      przycisk.addEventListener("click", function () {
+        // Zdejmujemy podświetlenie ze wszystkich przycisków...
+        document.querySelectorAll(".filtr").forEach(function (b) {
+          b.classList.remove("aktywny");
+        });
+        // ...i podświetlamy kliknięty
+        przycisk.classList.add("aktywny");
+
+        wybranaKategoria = przycisk.dataset.kategoria;
+        pokazPromocje();
+      });
+    });
+
+    // Start – pokazujemy promocje po wczytaniu strony
+    pokazPromocje();
+  </script>
+
+</body>
+</html>
